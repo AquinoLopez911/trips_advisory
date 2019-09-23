@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+
+        #maincontainer {
+            background-color: skyblue;
+            min-height: 1000px;
+        }
+        ul {
+            list-style-type: none;
+        }
+        h1 {
+            display: inline-block;
+            
+        }
+        h2,h3,h4,h5 {
+            margin: 3%;
+        }
+        #logout_button {
+            margin-left: 90%;
+        }
+        #reviews_container {
+            width: 99%;
+            margin: 30px auto;
+        }
+        #createbook_button {
+            display: inline-block;
+            margin: 10px 50%; 
+            width: 100px;
+
+        }
+        #my_reviews {
+            background-color: #eee4c2;
+        }
+        #all_reviews {
+            background-color: lavender;
+        }
+        .lavender_reviews {
+            margin: 30px auto;
+            background-color: lavender;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            padding: 30px;
+            overflow-wrap: break-word;
+            overflow: auto
+        }
+        .tan_reviews {
+            margin: 30px auto;
+            background-color: #eee4c2;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            padding: 30px;
+            overflow-wrap: break-word;
+            overflow: auto;
+        }
+        .inline {
+            display: inline-block;
+            width: 49%;
+            vertical-align: top;
+            text-align: center;
+            border-radius: 15px;
+            min-height: 400px;
+        }
+        #other_books_container {
+            width: 100%;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        #list_of_books {
+            width: 100%;
+            height: 240px;
+            overflow: auto;
+        }
+        #list_of_books ul {
+            list-style-type: none;
+        }
+        #book_title {
+            font-size: 45px;
+        }
+        * {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        *:before,*:after {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="maincontainer" >
+        <a  id="logout_button" href="/travels"><button>home</button></a>
+        <a  href="/logout"><button>logout</button></a>
+        <br>
+        <div id="reviews_container">
+            <div class="inline" id="my_reviews">
+                <h2>{{this_trip.destination}}</h3>
+                <h4>planned by: {{this_trip.planner.name}}</h4>
+                <h3>{{this_trip.plan}}</h3>
+                <h5>start date:{{this_trip.start_date}}</h5>
+                <h5>end date:{{this_trip.end_date}}</h5>
+                <!-- <a href="/delete_book/{{this_book.id}}"></a> -->
+                <!-- make divs for every review -->
+                {% for book in this_book_reviews %}
+                    <div class="lavender_reviews my_reviews">
+                        <p><a href="/">{{review.user_who_reviewed.name}}</a> says: {{review.review}}</p>
+                        <p>rating:{{review.rating}}</p>
+                        {% if request.session.id == review.user_who_reviewed.id %}
+                            <a href="/delete/{{review.id}}">delete this review</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}  
+            </div>  
+            <div class="inline " id="all_reviews">
+                <div class="inline" id="other_books_container">
+                        <h1>Other Trips</h1>
+                        <p>start &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; end</p>
+                        <div id="list_of_books">
+                            <ul class="list-group">
+                                {% for trip in all_trips %}
+                                    <li class="list-group-item">{{trip.start_date}}&emsp;&emsp;<a href="/trip/{{trip.id}}">{{trip.destination}}</a>&emsp;&emsp;{{trip.start_date}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                <div >
+                    <h1>Travel Buddies</h1>
+                    <ul>
+                    {% for buddy in this_trip_buddies %}
+                        <li style="font-size: 20px;">{{buddy.name}}</li>
+                    {% endfor %}    
+                    </ul>
+                </div>
+            </div>
+        </div>        
+    </div>
+    </body>
+</html>

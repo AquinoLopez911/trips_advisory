@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+
+        #maincontainer {
+            background-color: skyblue;
+        }
+        h1 {
+            display: inline-block;
+            font-size: 70px;
+            
+        }
+        #logout_button {
+            margin-left: 20%;
+        }
+        #purple {
+            margin: 0 3px;
+            width: 32%;
+            height: 20px;
+            background-color: lavender;
+            display: inline-block;
+            text-align: center;
+        }
+        #green {
+            margin: 0 3px;
+            width: 33%;
+            height: 20px;
+            background-color: honeydew;
+            display: inline-block;
+            text-align: center;
+        }
+        #tan {
+            margin: 0 3px;
+            width: 33%;
+            height: 20px;
+            background-color: #eee4c2;
+            display: inline-block;
+            text-align: center;
+        }
+        #createbook_button {
+            display: inline-block;
+            margin: 10px 50%; 
+            width: 100px;
+
+        }
+        #my_reviews {
+            background-color: #eee4c2;
+        }
+        #all_reviews {
+            background-color: lavender;
+        }
+        .lavender_reviews {
+            margin: 30px auto;
+            background-color: lavender;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            padding: 30px;
+            overflow-wrap: break-word;
+            overflow: auto
+        }
+        .joined_reviews {
+            margin: 30px auto;
+            background-color: honeydew;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            padding: 30px;
+            overflow-wrap: break-word;
+            overflow: auto
+        }
+        .tan_reviews {
+            margin: 30px auto;
+            background-color: #eee4c2;
+            width: 300px;
+            height: 300px;
+            text-align: center;
+            padding: 30px;
+            overflow-wrap: break-word;
+            overflow: auto;
+        }
+        .inline {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+            text-align: center;
+            border-radius: 15px;
+            /* margin-right:5%; */
+        }
+        #other_books_container {
+            width: 325px;
+            height: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+        #list_of_books {
+            width: 325px;
+            height: 240px;
+            overflow: auto;
+        }
+        #list_of_books ul {
+            list-style-type: none;
+        }
+        #book_title {
+            font-size: 45px;
+        }
+        * {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+        *:before,*:after {
+            -webkit-box-sizing: content-box;
+            -moz-box-sizing: content-box;
+            box-sizing: content-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="maincontainer" >
+        <h1>Welcome {{user.name}}! here are the Trips </h1>
+        <a  id="logout_button" href="/add_trip"><button>add new Trip</button></a>
+        <a  href="/logout"><button>logout</button></a>
+        <br>
+        <div id="keys">
+            <div id="purple">
+                <p>your planned trips</p>
+            </div>
+            <div id="green">
+                    <p>your joined trips</p>
+            </div>
+            <div id="tan">
+                    <p>all trips</p>
+            </div>
+        </div>
+        <div id="reviews_container">
+            <div class="inline" id="my_trips">
+                <h3>your Trips</h3>
+                <!-- make divs for every review -->
+                {% for trip in user_trips %}
+                    <div class="lavender_reviews my_reviews">
+                        <a id="book_title" href="/trip/{{trip.id}}">{{trip.destination}}</a>
+                        <p>start:{{trip.start_date}}</p>
+                        <p>end:{{trip.start_date}}</p>
+                    </div>
+                {% endfor %}
+                {% for trip in joined_trips %}
+                    <div class="joined_reviews my_reviews">
+                        <a id="book_title" href="/trip/{{trip.id}}">{{trip.destination}}</a>
+                        <p>{{trip.planner.name}}</p>
+                        <p>start:{{trip.start_date}}</p>
+                        <p>end:{{trip.start_date}}</p>
+                    </div>
+                {% endfor %}
+            </div>  
+            <div class="inline " id="all_trips">
+                <!-- make divs for every review -->
+                <h3>all Trips</h3>
+                {% for trip in all_trips %}
+                    {% if trip.planner.id != request.session.id %}
+                    
+                        <div class="tan_reviews all_reviews">
+                            <a id="book_title" href="/trip/{{trip.id}}">{{trip.destination}}</a>
+                            <p>{{trip.planner.name}}</p>
+                            <p>rating:{{trip.start_date}}</p>
+                            <p>rating:{{trip.start_date}}</p>
+                            <a href="/join_trip/{{trip.id}}">Join</a>
+                        </div>
+                    {% endif %}    
+                {% endfor %}  
+            </div>
+        </div>        
+    </div>
+    </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: cornflowerblue;
+        }
+        #main_container {
+            width: 1000px;
+            margin: 100px auto;
+            background-color: #777;
+        }
+
+        #error_message_container {
+            width: 300px;
+            margin: 0 auto;
+            text-align: center;
+            
+        }
+        ul {
+            list-style-type: none;
+        }
+        .form{
+            display:inline-block;
+            margin: 75px;
+            vertical-align: top;
+            margin: 20px 98px;
+            text-align: center;
+        }
+    </style>
+    <title>Login Registration</title>
+</head>
+<body>
+    
+    <div id="main_container">
+        <div id="error_message_container">
+            {% if messages %}
+            <ul class="messages">    
+                {% for message in messages %}    
+                    <li style="color: red" >{{ message }}</li>    
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        <div class = "form">
+            <h1>Registration</h1>
+            <form action="register" method="post">
+                    {% csrf_token %}
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="">
+                </div>
+                <div>
+                    <label for="username">username:</label>
+                    <input type="text" name="username" id="">
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="">
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="">
+                </div>
+                <div>
+                    <label for="confirm">Confirm Password:</label>
+                    <input type="password" name="confirm" id="">
+                </div>
+                <div>
+                    <input type="submit" value="Register" id="">
+                </div>
+            </form>
+        </div>
+        <div class = "form">
+            <h1>Login</h1>
+            <form action="login" method="post">
+                    {% csrf_token %}
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="text" name="email" id="">
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="">
+                </div>
+                <div>
+                    <input type="submit" value="login" id="">
+                </div>
+            </form>
+        </div>
+    </div>    
+</body>
+</html>
