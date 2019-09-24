@@ -163,8 +163,7 @@
                 <!-- make divs for every review -->
                 <h3>all Trips</h3>
                 {% for trip in all_trips %}
-                    {% if trip.planner.id != request.session.id %}
-                    
+                    {% if trip.planner.id != request.session.id %}   <!--check to see if user is a planner of the trip-->
                         <div class="tan_reviews all_reviews">
                             <a id="book_title" href="/trip/{{trip.id}}">{{trip.destination}}</a>
                             <p>{{trip.planner.name}}</p>

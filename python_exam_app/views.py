@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 import bcrypt
+import datetime
 
 
 
@@ -44,13 +45,40 @@ def show_all_trips(request):
     if 'id' not in request.session:
         return redirect('/')
     else:
+        #get todays date
+        # today = datetime.datetime.now()
+
+        #get the loggid in user
         user = User.objects.get(id = request.session['id'])
+
+        #get the trips that THIS user has planned
         user_trips = Trip.objects.filter(planner = user.id)
 
+        #get the trips that THIS user has JOINED
         joined_trips = Trip.objects.filter(buddies = user.id)
 
+        #DELETE TRIPS THAT HAVE ALREADY STARTED OR PASSED ?
+        # #trips that started before today
+        # expired_trips = Trip.objects.filter(start_date = today )
+
+        # print(today)
+        # print(expired_trips[0])
+
+        # for trip in expired_trips:
+        #     print("today" + today)
+        #     print("start date: " + trip.start_date)
+        #     if trip.start_date < today:
+        #         trip.delete()
+
+        #get all trips where THIS user IS NOT a BUDDY
         all_trips = Trip.objects.exclude(id__in = joined_trips)
+
+
+
+        #in the html, when we display all_trips, we will exclude trips he is a planner of 
+
         context = {
+
 
             'logged_in_user' : user,
             'user_trips': user_trips,
